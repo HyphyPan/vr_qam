@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MathTest" default="init" basedir="."> 
+	<property name="targetDir" value="../../target" />  
+	<property name="reportsDir" value="../../target/test_reports" />  
+	<target name="init">
+		<mkdir dir="${reportsDir}"/>
+		<mkdir dir="${targetDir}"/>
+		<delete includeEmptyDirs="true">
+			<fileset dir="${reportsDir}">
+				<include name="**/*"/>			
+			</fileset>
+			<fileset dir="${targetDir}">
+				<include name="**/report.zip"/>
+			</fileset>
+		</delete>	
+		<antcall target="checkOs"></antcall>
+	</target>
+	
+	<target name="checkOs">
+		<condition property="osTarget" value="isUnix" else="isWindows">
+			<os family="unix" />
+		</condition>
+		<antcall target="${osTarget}"></antcall>		
+	</target>
+	
+	<target name="isUnix">
+	    <exec executable="/bin/sh">
+			<arg line="-c 'python test/runner.py'"/>
+	    </exec>
+		<antcall target="generateHtml"></antcall>
+	</target>
+	
+	<target name="isWindows">
+		<exec executable="cmd.exe">
+			<arg line="/c y:/Python27/python test/runner.py"/>
+		</exec>
+		<antcall target="generateHtml"></antcall>
+	</target>
+	
+	<target name="generateHtml"> 
+	    <junitreport todir="${reportsDir}">
+			<fileset dir="${reportsDir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${reportsDir}/html"/>
+	    </junitreport>
+		<antcall target="packageReport"></antcall>
+	</target>
+	
+	<target name="packageReport">
+		<zip destfile="${targetDir}/report.zip" basedir="${reportsDir}/html"/>
+	</target>
+</project>
