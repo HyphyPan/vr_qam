@@ -17,23 +17,6 @@
         </property>
     </bean>
 
-    <bean
-            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="messageConverters">
-            <util:list id="beanList">
-                <ref bean="mappingJacksonHttpMessageConverter" />
-            </util:list>
-        </property>
-    </bean>
-    <bean id="mappingJacksonHttpMessageConverter"
-          class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-        <property name="supportedMediaTypes">
-            <list>
-                <value>text/html;charset=UTF-8</value>
-            </list>
-        </property>
-    </bean>
-
     <context:component-scan base-package="com.nd.bamborest.demo" />
 
 </beans>
