@@ -1,4 +1,4 @@
-package com.websystique.springmvc.controller;
+package com.nd.restful.controller;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.websystique.springmvc.domain.Message;
+import com.nd.restful.entity.Message;
 
 @RestController
 public class GetController {
