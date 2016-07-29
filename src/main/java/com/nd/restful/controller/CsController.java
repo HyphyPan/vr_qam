@@ -1,5 +1,9 @@
 package com.nd.restful.controller;
 
+import com.nd.restful.services.CsService;
+import com.nd.sdp.cs.demo.Demo2_0_4;
+import com.nd.sdp.cs.sdk.Dentry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CsController {
-    @RequestMapping("/list")
-    public void FileList(){
+    @Autowired
+    private CsService csService;
 
+    @RequestMapping("/list")
+    public Object FileList(){
+        return csService.FileList();
     }
 }
