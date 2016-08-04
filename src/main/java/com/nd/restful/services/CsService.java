@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpPatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Map;
 @Service
 public class CsService {
     String dentryId = "ca2e8f92-9a5f-4111-b92d-8725b5b55fd5";
-    String serviceId = "22a72450-691d-4fe9-8b39-0724c76990a9";
+    String serviceId = "73120074-8a70-4576-944f-6898945828de";
     String serviceName = "dev_content_aaaaaa";
     String path = "VrResource";
     String userId = "251361";
@@ -28,19 +29,24 @@ public class CsService {
 
     public CsService() throws Exception {
         dentry = new Dentry();
-        dentry.setPath("/" + serviceName + "/VrResource/");
-        dentry.setServiceId(serviceId);
+        dentry.setPath("/" + serviceName + "/" + path + "/");
+        CsConfig.setHost("sdpcs.beta.web.sdp.101.com");
     }
 
-    public JSONArray getFileList() throws Exception {
-        JSONArray jsonArray = new JSONArray();
+    public List<Dentry> getFileList() throws Exception {
         String path = null;
         String session = getSession();
-        List<Dentry> list = Dentry.list(serviceName, path, serviceId, "createAt gt 0", "createAt desc", 10, session);
-        jsonArray = JSONArray.parseArray(list.toString());
-        return jsonArray;
+        List<Dentry> list = Dentry.list(serviceName, path, dentryId, "createAt gt 0", "createAt desc", 10, session);
+        return list;
     }
 
+    public Dentry uploadFile(String fileName) throws Exception {
+        File file = new File(fileName);
+        dentry.setName(file.getName());
+        return dentry;
+    }
+
+    // 以下方法为内容服务平台获取session的方法
     private String session = null;
     private long expireAt = 0;
 

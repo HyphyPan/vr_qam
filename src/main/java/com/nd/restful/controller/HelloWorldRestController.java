@@ -17,7 +17,6 @@ public class HelloWorldRestController {
 	}
 
 	@RequestMapping(value = "/hello/{player}", produces = MediaType.APPLICATION_JSON_VALUE)
-//	@RequestMapping("/hello/{player}")
 	public Message message(@PathVariable String player) {
 
 	    // REST Endpoint.
