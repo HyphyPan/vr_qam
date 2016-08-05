@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 /**
  * Created by Hyphy on 2016/8/3.
@@ -26,10 +28,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .logout()
 //                .logoutSuccessUrl("/")
 //                .permitAll();
+        http.csrf().disable();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
     }
+
+//    private CsrfTokenRepository csrfTokenRepository()
+//    {
+//        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+//        repository.setSessionAttributeName("_csrf");
+//        return repository;
+//    }
 }
